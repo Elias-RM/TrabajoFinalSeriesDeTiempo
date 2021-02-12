@@ -1,0 +1,655 @@
+---
+output: 
+  html_document:
+    theme: united
+    toc: true
+    toc_float: true
+    toc_depth: 6
+    number_sections: true
+    highlight: haddock
+    df_print: kable
+    fig_width: 10
+    fig_height: 10
+    
+  github_document:
+    toc: true
+    toc_depth: 6
+    number_sections: true
+    fig_width: 10
+    fig_height: 10
+    dev: jpeg
+
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Cointegración del Crecimiento Económico, Inflación y Tasa de interés en México (2008-2020) {-}
+
+**Universidad Nacional Autónoma de México**
+
+**Facultad de Econimia - UNAM**
+
+**Integrantes del equipo**
+
+- Cedeño Alvarado Fabian
+- Murcia Rojas Tania
+- Reyes Martínez Elías
+
+**Profesor**
+
+- Oliva Váquez Benjamín
+
+**Asignatura**
+
+**Series de Tiempo**
+
+
+# Introducción
+A lo largo del tiempo variables como el crecimiento económico, la inflación y la tasa de interés han sido relevantes en el análisis de los economistas, así mismo estas han destacado como objeto de estudio para la teoría económica e incluso se han implementado en diversas modelaciones, pues, se trata de variables que son de gran relevancia para el manejo de la política económica del país. 
+
+El crecimiento económico de México en la actualidad se ha presentado en cifras decrecientes, esto debido a la situación de emergencia sanitaria que se vive a nivel mundial provocado por SARS- COVID-19, no obstante, desde hace más de una década, superada la crisis económica de 2008, el crecimiento económico ya se veía mermado, esto, probablemente, relacionado con el manejo de la política monetaria sujeta a una regla que prioriza a la estabilidad de precios, empleando como instrumento de política económica a la tasa de interés. Es debido a ello que parece relevante el análisis de variables como el crecimiento económico, la inflación y la tasa de interés, para lograr identificar la relación que existe entre ellas y que es lo que están causando en relación a las otras variables. 
+El trabajo parte de la hipótesis que plantea que variables como el crecimiento, la inflación y la tasa de interés convergen a lo largo del tiempo y que la relación existente entre el crecimiento y la inflación es positiva, mientras que para el crecimiento y la tasa de interés es negativa. 
+
+Para fines teóricos del trabajo se ha llevado a cabo una revisión de la literatura acorde con el tema a tratar, entre la que se ha encontrado el artículo Análisis de cointegración y valores umbrales entre la inflación y el crecimiento económico en México: 1970-2000, realizado por W. Adrián Rosso y Edgar J. Sanchez Carrera donde se proponen como objetivo estimar empíricamente las relaciones de largo plazo y los efectos umbrales entre la inflación y el crecimiento económico. Partiendo del análisis de dos enfoques, el estructuralista y el monetarista, plantean que el crecimiento se encuentra estimulado por períodos de inflación, bajos y estables, y perjudicado, por niveles altos y volátiles. Razón por la cual se hace posible identificar la existencia de un valor crítico de la variación de los precios; para niveles inferiores al valor crítico existe correlación positiva entre crecimiento e inflación y para niveles superiores la correlación existente es negativa. A través del empleo de cointegración y estimaciones del tipo “threshold estimations” obtienen como resultado que el efecto generado por un incremento del 1% en la inflación  produce una disminución del PIB real en 1.5% y del modelo de estimación umbral se arroja como resultado que para valores de inflación por encima del 9%, se presenta un efecto negativo sobre el crecimiento. 
+
+El artículo  Relación entre crecimiento económico y tasa de interés publicado por la Revista Chilena de Economía y Sociedad, llevado a cabo por Claudia Molina Mac-Kay, Sara Balboa Cerpa, Maximiliano Lorca Venegas y Arnold Rodriguez Saavedra, ha sido incipiente para este trabajo. Los autores establecen que el crecimiento económico en Chile de las últimas décadas ha sido mayor al crecimiento mundial, pero que a pesar de ello, se han presentado puntos de inflexión en la trayectoria de la tasa de interés, particularmente en la tasa de política monetaria, afectando la estabilidad del funcionamiento de la economía y generando incertidumbre respecto al mantenimiento de una relación de equilibrio entre las variables de crecimiento y tasa de interés. Cuestionando si la relación entre tasa de interés es directa o inversa  con la tasa de crecimiento y el sentido de la causalidad existente entre una variable y otra, realizan el método de cointegración y el análisis de causalidad de Granger para series mensuales de 138 observaciones correspondientes al periodo comprendido entre 2000-2011, y obtienen como resultado la existencia de una relación de largo plazo hacia la que convergen y se mueven conjuntamente las variables seleccionadas, afirmando entonces que en una economía estable donde prevalece la aplicación de reglas monetarias, a pesar de la existencia de shocks exógenos, existe una relación (negativa) de equilibrio entre las tasas de crecimiento y de interés. Así mismo, con causalidad de Granger se denota que la variable de crecimiento económico explica a la variable tasa de interés.
+
+Dados los resultados, su análisis culmina exponiendo que para el caso chileno es más conveniente utilizar reglas de política monetaria anunciadas, pues estas generan una menor variabilidad en la tasa de interés. 
+Revisados los trabajos anteriores, podemos denotar que tanto la inflación, como la tasa de interés convergen en el tiempo con el crecimiento económico del país y ambas variables presentan una relación positiva y negativa, respectivamente, no obstante, estos análisis se encuentran centrados en períodos y lugares distintos, por lo que nos hemos visto motivados a realizar un análisis conjunto entre esas tres variables relevantes para el caso mexicano en un periodo más actual, en el que se han presentado dos crisis económicas, comprendido entre 2008 y 2020. Esperando obtener resultados concretos respecto al comportamiento de la economía y la forma en que esta puede verse afectada por  el manejo de la política monetaria. 
+
+Para lograr el objetivo planteado parece conveniente seguir el procedimiento de las series de tiempo planteado en los trabajos revisados; en un  inicio las series serán desestacionalizadas y diferenciadas, posteriormente se aplicarán pruebas de raíces unitarias para corroborar que el orden de integración que poseen sea el mismo, para poder realizar cointegración culminando con  la aplicación de la prueba de Johansen.
+ El trabajo se encontrará compuesto por cuatro  apartados, en el primero y segundo se describirán los datos, el tercer apartado se encontrará enfocado en probar la hipótesis que nos hemos planteado y, por último, se emitirán conclusiones respecto a lo analizado.
+
+
+
+# Descripción de los Datos
+Para el análisis del trabajo se han seleccionado tres  indicadores relevantes que explican a las variables estudiadas: el Indicador Global de la Actividad Económica, el Índice de Precios al Consumidor y la Tasa de Interés Interbancaria de Equilibrio. Los datos han sido obtenidos de manera mensual, motivo por el cual no fue necesario realizarles algún tratamiento específico, las observaciones totales para cada una de las variables ascienden a 155. 
+La primera variable correspondiente al crecimiento económico es expresada a través del Índice Global de la Actividad Económica (IGAE) se ha definido este indicador debido a la periodicidad que presenta, de manera mensual, puesto que el Producto Interno Bruto (PIB) parecería ser más acertado, no obstante, se trata de un indicador presentado de manera trimestral, de tal forma que para facilitar el manejo de datos se ha preferido al IGAE. La procedencia de los datos fue obtenida del Instituto Nacional de Geografía y Estadística (INEGI).
+Para el análisis de tasa de interés se ha seleccionado a la Tasa de Interés Interbancaria de Equilibrio a 28 días, a pesar de contar con diversas opciones, se ha elegido la más óptima para referir a la política monetaria, los datos empleados respecto a esta variable han sido obtenidos del Banco de México (Banxico).
+
+Para representar a la variable inflación se ha elegido el Índice Nacional de Precios al Consumidor (INPC), emitido de manera mensual y obtenido de igual forma del Banco de México (Banxico).
+
+
+# Prueba de Hipóteis
+Hipótesis:
+El trabajo parte de la hipótesis que plantea que variables como el crecimiento, la inflación y la tasa de interés convergen a lo largo del tiempo y que la relación existente entre el crecimiento y la inflación es positiva, mientras que para el crecimiento y la tasa de interés es negativa. 
+
+# Análisis descriptivo
+
+## Preparar ambiente
+
+Librerias que debemos descargar 
+```{r echo = FALSE , mesage= FALSE}
+options(warn = -1)
+```
+```{r eval = FALSE }
+#library(rmarkdown)
+install.packages("readxl")
+install.packages("rmarkdown")
+install.packages("seasonal")
+install.packages("seasonalview")
+install.packages("ggpubr")
+```             
+Librerias que debemos importar
+
+```{r message = FALSE }
+library(ggpubr)
+
+library(ggplot2)
+library(plotly)
+
+library(dplyr)
+library(readxl)
+library(stats)
+library(seasonal)
+library(seasonalview)
+
+library(MASS)
+library(strucchange)
+library(zoo)
+library(sandwich)
+library(urca)
+library(lmtest)
+library(vars)
+
+
+
+``` 
+
+Indicar el directorio de trabajo
+
+```{r message = FALSE }
+# Directorio de trabajo
+
+# https://bookdown.org/yihui/rmarkdown/htmlwidgets-sigma.html
+
+setwd("~/Series-de-Tiempo-Fall2020-master/examen2")
+
+``` 
+### Descripción de los datos utilizados
+|Variable|	Descripción|
+|--------|-------------|
+| IGAE | Indicador global de la actividad económica, base 2013|
+| INPC | Indice Nacional de Precios al consumidor|
+| TIIE | Tasa de Interes Interbancaria de Equlibrio a 28 dias|
+
+
+
+Importamos la base de datos desde el archivo **Base_Examen.xlsx **
+```{r }
+B_Datos <- read_excel("database.xlsx", sheet = "dataset", col_names = TRUE)
+```
+```{r echo = FALSE }
+knitr::kable(
+  B_Datos[1:4, ],
+  caption = "Base de datos importada "
+)
+```
+## Conversión a series de tiempo 
+
+```{r message = FALSE }
+IGAE <- ts(B_Datos$IGAE, 
+           start = c(2008, 1), 
+           freq = 12)
+
+INPC <- ts(B_Datos$INPC, 
+             start = c(2008, 1), 
+             freq = 12)
+TIIE_28 <- ts(B_Datos$TIIE_28, 
+             start = c(2008, 1), 
+             freq = 12)
+
+```
+
+*Gráficas*
+```{r message = FALSE }
+
+p_igae <- ggplot(B_Datos, aes(x=Fecha, y=IGAE)) + 
+  geom_line(color = "#239B56" , size = 0.5)
+
+p_inpc <- ggplot(B_Datos, aes(x=Fecha, y=INPC)) + 
+  geom_line(color = "#6C3483", size = 0.5)
+
+p_tiie <- ggplot(B_Datos, aes(x=Fecha, y=TIIE_28)) + 
+  geom_line(color = "#A04000", size = 0.5)
+
+ggarrange( p_igae, p_inpc , p_tiie , 
+          labels = c("IGAE", "INPC", "TIIE_28"),
+          ncol = 1, nrow = 3 )
+```
+
+### IGAE ajustado
+
+```{r message = FALSE }
+
+Seas_IGAE <- seas(IGAE)
+knitr::kable(
+  summary(Seas_IGAE),
+  caption = "Summary de la serie IGAE"
+)
+
+IGAE_Ad <- final(Seas_IGAE)
+
+
+```
+ Gráfica
+
+```{r message = FALSE }
+plot(Seas_IGAE)
+
+```
+
+### INPC ajustado
+
+```{r message = FALSE }
+
+Seas_INPC <- seas(INPC)
+
+knitr::kable(
+  summary(Seas_INPC),
+  caption = "Summary de la serie INPC"
+)
+
+INPC_Ad <- final(Seas_INPC)
+
+```
+Gráfica
+```{r message = FALSE }
+plot(Seas_INPC)
+
+```
+
+### TIIE_28 ajustado
+```{r message = FALSE }
+
+Seas_TIIE_28 <- seas(TIIE_28)
+
+knitr::kable(
+  summary(Seas_TIIE_28),
+  caption = "Summary de la serie Seas_TIIE_28"
+)
+
+TIIE_28_Ad <- final(Seas_TIIE_28)
+
+
+```
+
+Gráfica
+
+```{r message = FALSE }
+plot(Seas_TIIE_28)
+
+```
+
+
+## Desestacionalización
+
+### Agregando nuevas series desestacionalizadas:
+
+```{r message = FALSE }
+
+Datos_Ad <- data.frame(cbind(IGAE_Ad, INPC_Ad, TIIE_28_Ad))
+
+Datos_Adj <- cbind(B_Datos, Datos_Ad)
+
+save(Datos_Adj, file = "Datos_Adj.RData")
+
+load("Datos_Adj.RData")
+
+```
+
+```{r message = FALSE }
+knitr::kable(
+  summary(Datos_Adj),
+  caption = "Summary de Datos_Adj"
+)
+```
+
+### Convertimos a series de tiempo
+```{r message = FALSE }
+Datos <- ts(Datos_Adj[5: 7], 
+            start = c(2008, 1), 
+            end = c(2020, 11), 
+            freq = 12)
+# Logaritmos
+LDatos <- log(Datos)
+
+# Diferencias
+DLDatos <- diff(log(Datos, base = exp(1)), 
+                lag = 1, 
+                differences = 1)
+```
+
+### Graficas
+
+#### gráfica en nivles
+
+```{r message = FALSE }
+
+plot(LDatos, 
+     plot.type = "m", nc = 2,
+     col = c("forestgreen", "violetred3", "orangered1"), 
+     main = "Series en Logaritmos", 
+     xlab = "Tiempo")
+```
+
+#### grafica en diferencias
+
+```{r message = FALSE }
+
+plot(DLDatos, 
+     plot.type = "m", nc = 2,
+     col = c("deeppink", "darkturquoise", "darkgreen"), 
+     main = "Series en Diferencias Logaritmicas", 
+     xlab = "Tiempo")
+```
+
+
+## Pruebas de Raices Unitarias
+
+
+Regla de dedo para idenificar el numero de rezagos
+p = int{4*(155/100)^(1/4)}
+p = int(4*(155/100)^(1/4))
+p = int{4.46316472}
+p = 4 
+
+p <- (4*(155/100)^(1/4))
+
+### 2. PP: Phillips - Perron Test
+
+
+#### Prueba IGAE
+
+##### NIVELES: IGAE
+
+###### Modelo a con tendencia
+```{r message = FALSE }
+
+summary(ur.pp(LDatos[, 1], type = "Z-tau", model = "trend", use.lag = 4)) 
+```
+
+el t estadistico es mayor al t de tablas, se acepta ho, la serie no es estacionaria
+
+
+###### Modelo b con constante
+```{r message = FALSE }
+
+summary(ur.pp(LDatos[, 1], type = "Z-tau", model = "constant", use.lag = 4))
+```
+
+el t estadistico es mayor al t de tablas, se acepta ho, la serie no es estacionaria  
+
+
+##### DIFERENCIAS: IGAE
+
+###### Modelo a con tendencia
+
+```{r message = FALSE }
+summary(ur.pp(DLDatos[, 1], type = "Z-tau", model = "trend", use.lag = 4))
+```
+el t estadistico es menor al t de tablas, se rechaza ho, la serie es estacionaria 
+la serie se tiene que diferenciar al menos una vez
+
+###### Modelo b con constante
+
+```{r message = FALSE }
+summary(ur.pp(DLDatos[, 1], type = "Z-tau", model = "constant", use.lag = 5))
+```
+el t estadistico es menor al t de tablas, se rechaza ho, la serie es estacionaria 
+la serie se tiene que diferenciar al menos una vez
+
+#### Prueba INPC
+
+##### NIVELES: INPC
+
+###### modelo a con tendencia
+ 
+```{r message = FALSE }
+summary(ur.pp(LDatos[, 2], type = "Z-tau", model = "trend", use.lag = 4)) 
+```
+
+el t estadistico es mayor al t de tablas, se acepta ho, la serie no es estacionaria 
+
+###### modelo b, con constante
+
+```{r message = FALSE }
+summary(ur.pp(LDatos[, 2], type = "Z-tau", model = "constant", use.lag = 4)) 
+```
+el t estadistico es mayor al t de tablas, se acepta ho, la serie no es estacionaria
+
+##### DIFERENCIAS: INPC
+
+###### modelo a con tendencia
+
+```{r message = FALSE }
+summary(ur.pp(DLDatos[, 2], type = "Z-tau", model = "trend", use.lag = 4))
+```
+
+el t estadistico es menor al t de tablas, se rechaza ho, la serie es estacionaria 
+la serie se tiene que diferenciar al menos una vez
+
+###### modelo b, con constante
+```{r message = FALSE }
+summary(ur.pp(DLDatos[, 2], type = "Z-tau", model = "constant", use.lag = 4))
+```
+
+el t estadistico es menorr al t de tablas, se rechaza ho, la serie  es estacionaria 
+la serie se tiene que diferenciar al menos una vez
+
+#### Prueba TIIE_28
+##### NIVELES: TIIE_28
+###### modelo a con tendencia
+
+```{r message = FALSE }
+summary(ur.pp(LDatos[, 3], type = "Z-tau", model = "trend", use.lag = 4)) #modelo a, con tendencia
+```
+el t estadistico es mayor al t de tablas, se acepta ho, la serie no es estacionaria  
+
+###### modelo b con constante
+
+```{r message = FALSE }
+summary(ur.pp(LDatos[, 3], type = "Z-tau", model = "constant", use.lag = 4)) #modelo b, con constante
+```
+
+el t estadistico es mayor al t de tablas, se acepta ho, la serie no es estacionaria  
+
+
+##### DIFERENCIAS: TIIE_28 
+
+###### modelo a con tendencia
+
+```{r message = FALSE }
+summary(ur.pp(DLDatos[, 3], type = "Z-tau", model = "trend", use.lag = 4))
+```
+el t estadistico es menorr al t de tablas, se rechaza ho, la serie es estacionaria 
+la serie se tiene que diferenciar al menos una vez
+
+###### modelo b con constante
+
+```{r message = FALSE }
+summary(ur.pp(DLDatos[, 3], type = "Z-tau", model = "constant", use.lag = 4))
+```
+el t estadistico es menor al t de tablas, se rechaza ho, la serie  es estacionaria 
+la serie se tiene que diferenciar al menos una vez
+
+#### Conclusión 
+
+Dado que la conclusion es que el modelo tiene el mismo orden de integracion cuando le aplicamos el modelo "a" y el modelo "b" dadas la pruebas de Phillips-Perron 
+Elegimos el modelo con tendencia
+
+### Modelos VAR
+
+Procedemos a realizar un modelo VAR(p) en niveles
+
+|VAR(p)| En niveles|
+|------|-----------|
+|ARGUMENTOS:|| 
+|p | 1|
+|type | trend|
+|season | NULL|
+|exogen | NULL|
+|lag.max | NULL|
+|ic | AIC|
+
+
+#### Ambos modelos
+si elegimos el modelo con ambos, el numero de rezagos de acuerdo al criterio AIC debe ser 8 rezagos
+
+
+```{r message = FALSE }
+
+VARselect(LDatos, lag.max = 10, type = "both")
+```
+
+#### Modelo solo tendencia
+
+si elegimos el modelo con tendencia, el numero de rezagos de acuerdo al criterio AIC debe ser 2 rezagos
+
+```{r message = FALSE }
+
+VARselect(LDatos, lag.max = 10, type = "trend")
+```
+
+#### Modelo solo constante
+
+si elegimos el modelo con constante, el numero de rezagos de acuerdo al criterio AIC debe ser 2 rezagos
+
+```{r message = FALSE }
+
+VARselect(LDatos, lag.max = 10, type = "const")
+```
+
+#### Modelo sin tendencia ni constante
+
+
+si elegimos el modelo sin tendencia y sin consatante, el numero de rezagos de acuerdo al criterio AIC debe ser 4 rezagos
+
+```{r message = FALSE }
+
+VARselect(LDatos, lag.max = 10, type = "none")
+```
+
+#### Selección del modelo con tendencia
+
+El tipo de modelo que vamos a utlizar es con constante, ya que al realizar las pruebas de raices unitarias
+el modelo con constante tiene el mismo orden de integracion i=1.
+Para realizar el numero de rezagos utilizamos el criterio AIC, el cual nos dio que debemos utilizar 2 rezagos
+
+#### VAR Estimacion modelo con tendencia:
+
+```{r message = FALSE }
+
+VAR_1 <- VAR(LDatos, p = 2, type = "trend")
+VAR_1
+plot(VAR_1)
+```
+
+
+## Test de cointegración
+
+Realizamos la prueba de cointegracion con el modelo que incluye solo tendencia
+
+Existen al menos "d" vectores de cointegracion
+rechazo Ho, no hay cero vectores de cointegracion
+existe al menos 1 vector de cointegracion considerando un mecanismo con tendencia y con 2 rezagos
+el igae con relacion al INPC de largo plazo es positiva
+el igae con relacion al TIIE_28 de largo plazo es negativa
+y Una tendencia negativa
+
+```{r message = FALSE }
+
+summary(ca.jo(LDatos, type = "trace", ecdet = "trend", K = 2, spec = "longrun"))
+```
+
+
+Existen al menos "" vectores de cointegracion
+rechazo Ho, no hay cero vectores de cointegracion
+existe al menos 1 vector de cointegracion considerando un mecanismo con tendencia y con 2 rezagos
+el igae en su relacion con el INPC de largo plazo es positiva
+el igae en su relacion con el TIIE de largo plazo es negativa
+y Una constante positiva
+
+```{r message = FALSE }
+
+summary(ca.jo(LDatos, type = "trace", ecdet = "const", K = 2, spec = "longrun"))
+```
+
+Existen al menos "" vectores de cointegracion
+rechazo Ho, no hay cero vectores de cointegracion
+existe al menos 1 vector de cointegracion considerando un mecanismo sin tendencia y sin constante y 4 rezagos
+
+```{r message = FALSE }
+
+summary(ca.jo(LDatos, type = "trace", ecdet = "none", K = 4, spec = "longrun"))
+```
+
+Concluimos que la series cointegran utilizando un modelo con tendencia, un modelo con constante y sin tendencia y constante
+Utilizamos un procedimiento con constante
+
+```{r message = FALSE }
+
+CA_1 <- ca.jo(LDatos, type = "trace", ecdet = "trend", K = 2, spec = "longrun")
+summary(CA_1)
+```
+
+### Calculamos los residuales
+
+Residuales:
+
+```{r message = FALSE }
+
+TT <- ts(c(1:155), 
+         start = c(2008, 1), 
+         end = c(2020, 11), 
+         freq = 12)
+```
+
+calculamos la ecuacion de los residuales utilizando los resultados de summary(CA_1)
+
+```{r message = FALSE }
+
+U <- LDatos[ , 1] - 2.839673805*LDatos[ , 2] + 0.051677628*LDatos[ , 3] + 0.007464802*TT
+```
+
+forma de encontar un cobminacion lineal de los vectores incluio en el vector y
+generando un objeto estacionario
+
+Residual que genera la relacion de largo plazo de las series que cointegran alrededor de una tendencia
+estos residuales son estacionarios
+
+```{r message = FALSE }
+
+plot(U, main = "Residuales de la Ecuacion de Cointegracion",
+     type = "l", 
+     col = "darkred")
+```
+
+Aplicamos las Raices Unitarias para saber si los residuales son estacionarios 
+
+
+
+#### Prueba de raices unitarias para los residuales
+
+##### Prueba en NIVELES
+
+```{r message = FALSE }
+
+summary(ur.df(U, type = "trend", lags = 2))
+```
+
+```{r message = FALSE }
+
+summary(ur.df(U, type = "drift", lags = 2))
+```
+
+```{r message = FALSE }
+
+summary(ur.df(U, type = "none", lags = 4))
+```
+
+##### Prueba en DIFERENCIAS
+```{r message = FALSE }
+
+summary(ur.df(DLDatos[,1], type = "trend", lags = 2))
+```
+
+
+```{r message = FALSE }
+
+summary(ur.df(DLDatos[,1], type = "drift", lags = 2))
+
+```
+
+```{r message = FALSE }
+
+summary(ur.df(DLDatos[,1], type = "none", lags = 4))
+```
+
+los residuales son estacionarios alrededor de una tendencia
+
+
+# Conclusiones
+A manera de conclusión podemos señalar que a través de análisis realizado, en el que se aplicó el método de cointegración,  obtuvimos que existe una relación en el largo plazo entre las variables analizadas (IGAE, TIIE, INPC), donde es posible afirmar que la hipótesis del trabajo se cumple, dado que las relaciones encontradas entre las variables cumplen con lo planteado anteriormente.
+
+En el caso del crecimiento y la inflación, encontramos una relación positiva a lo largo del tiempo, es decir que un mayor crecimiento genera un incremento en la inflación. Lo cual nos hace sentido, ya que  año tras año el país crece en un porcentaje pequeño y va acompañado de un incremento en los precios, omitiendo los periodos de crisis, donde la situación se vuelve más compleja y el manejo de política monetaria sigue diversos rumbos.
+Así mismo, la relación que existe entre el crecimiento junto con la tasa de interés es negativa, ya que si el país crece entonces los agentes no optarán por adquirir créditos, porque el riesgo es menor a cuando la economía estuviese en una situación de crisis y la tasa es elevada  debido al riesgo y la incertidumbre, ocasionando que la tasa de interés sea más volátil. 
+
+# Bibliografía
+
+- Risso, W. and Sánchez Carrera, E., 2010. Análisis de cointegración y valores umbrales entre la inflación y el crecimiento económico en México: 1970-2007. Ensayos Revista de Economía, XXIX(2), pp.77-98.
+
+- Rico Delgado, C., 2004. POLÍTICA MONETARIA, CRECIMIENTO ECONÓMICO E INFLACIÓN: LOS RESULTADOS DE UN MODELO DE VECTORES AUTORREGRESIVOS. Licenciatura. Universidad Autónoma de Occidente. Facultad de Ciencias Económicas y Empresariales.
+
+- Molina Mac-Kay, C., Balboa Cerpa, S., Lorca Venegas, M. and Rodríguez Saavedra, A., 2015. RELACIÓN ENTRE CRECIMIENTO ECONÓMICO Y TASA DE INTERÉS. Revista Chilena de Economía y Sociedad, 9(2).
+
+- Revista Investigación Económica, núm.  especial 2009 sobre objetivos de inflación, Facultad de Economía de la UNAM.
+
+- Taylor, J., 1999. Monetary Policy Rules. Chicago, University of Chicago Press NBER.
+
+- Cerezo García, V., López González, T. and López Herrera, F., 2019. CRECIMIENTO ECONÓMICO E INFLACIÓN EN MÉXICO, 1993-2018: ¿UNA RELACIÓN LINEAL O NO LINEAL?. Investigación Económica.
+
