@@ -284,9 +284,9 @@ DLDatos <- diff(log(Datos, base = exp(1)),
                 differences = 1)
 ```
 
-### Graficas
+### Gráficas
 
-#### gráfica en nivles
+#### Gráfica en niveles
 
 ```{r message = FALSE }
 
@@ -297,7 +297,7 @@ plot(LDatos,
      xlab = "Tiempo")
 ```
 
-#### grafica en diferencias
+#### Gráfica en diferencias
 
 ```{r message = FALSE }
 
@@ -309,7 +309,7 @@ plot(DLDatos,
 ```
 
 
-## Pruebas de Raices Unitarias
+## Pruebas de Raíces Unitarias
 
 
 Regla de dedo para idenificar el numero de rezagos
@@ -327,114 +327,114 @@ p <- (4*(155/100)^(1/4))
 
 ##### NIVELES: IGAE
 
-###### Modelo a con tendencia
+###### Modelo A con tendencia
 ```{r message = FALSE }
 
 summary(ur.pp(LDatos[, 1], type = "Z-tau", model = "trend", use.lag = 4)) 
 ```
 
-el t estadistico es mayor al t de tablas, se acepta ho, la serie no es estacionaria
+El t estadístico es mayor al t de tablas, se acepta ho, la serie no es estacionaria
 
 
-###### Modelo b con constante
+###### Modelo B con constante
 ```{r message = FALSE }
 
 summary(ur.pp(LDatos[, 1], type = "Z-tau", model = "constant", use.lag = 4))
 ```
 
-el t estadistico es mayor al t de tablas, se acepta ho, la serie no es estacionaria  
+El t estadístico es mayor al t de tablas, se acepta ho, la serie no es estacionaria  
 
 
 ##### DIFERENCIAS: IGAE
 
-###### Modelo a con tendencia
+###### Modelo A con tendencia
 
 ```{r message = FALSE }
 summary(ur.pp(DLDatos[, 1], type = "Z-tau", model = "trend", use.lag = 4))
 ```
-el t estadistico es menor al t de tablas, se rechaza ho, la serie es estacionaria 
+El t estadístico es menor al t de tablas, se rechaza ho, la serie es estacionaria 
 la serie se tiene que diferenciar al menos una vez
 
-###### Modelo b con constante
+###### Modelo B con constante
 
 ```{r message = FALSE }
 summary(ur.pp(DLDatos[, 1], type = "Z-tau", model = "constant", use.lag = 5))
 ```
-el t estadistico es menor al t de tablas, se rechaza ho, la serie es estacionaria 
+El t estadístico es menor al t de tablas, se rechaza ho, la serie es estacionaria 
 la serie se tiene que diferenciar al menos una vez
 
 #### Prueba INPC
 
 ##### NIVELES: INPC
 
-###### modelo a con tendencia
+###### Modelo A con tendencia
  
 ```{r message = FALSE }
 summary(ur.pp(LDatos[, 2], type = "Z-tau", model = "trend", use.lag = 4)) 
 ```
 
-el t estadistico es mayor al t de tablas, se acepta ho, la serie no es estacionaria 
+El t estadístico es mayor al t de tablas, se acepta ho, la serie no es estacionaria 
 
-###### modelo b, con constante
+###### Modelo bB, con constante
 
 ```{r message = FALSE }
 summary(ur.pp(LDatos[, 2], type = "Z-tau", model = "constant", use.lag = 4)) 
 ```
-el t estadistico es mayor al t de tablas, se acepta ho, la serie no es estacionaria
+El t estadístico es mayor al t de tablas, se acepta ho, la serie no es estacionaria
 
 ##### DIFERENCIAS: INPC
 
-###### modelo a con tendencia
+###### Modelo A con tendencia
 
 ```{r message = FALSE }
 summary(ur.pp(DLDatos[, 2], type = "Z-tau", model = "trend", use.lag = 4))
 ```
 
-el t estadistico es menor al t de tablas, se rechaza ho, la serie es estacionaria 
+El t estadístico es menor al t de tablas, se rechaza ho, la serie es estacionaria 
 la serie se tiene que diferenciar al menos una vez
 
-###### modelo b, con constante
+###### Modelo B, con constante
 ```{r message = FALSE }
 summary(ur.pp(DLDatos[, 2], type = "Z-tau", model = "constant", use.lag = 4))
 ```
 
-el t estadistico es menorr al t de tablas, se rechaza ho, la serie  es estacionaria 
+El t estadístico es menorr al t de tablas, se rechaza ho, la serie  es estacionaria 
 la serie se tiene que diferenciar al menos una vez
 
 #### Prueba TIIE_28
 ##### NIVELES: TIIE_28
-###### modelo a con tendencia
+###### Modelo A con tendencia
 
 ```{r message = FALSE }
 summary(ur.pp(LDatos[, 3], type = "Z-tau", model = "trend", use.lag = 4)) #modelo a, con tendencia
 ```
-el t estadistico es mayor al t de tablas, se acepta ho, la serie no es estacionaria  
+El t estadístico es mayor al t de tablas, se acepta ho, la serie no es estacionaria  
 
-###### modelo b con constante
+###### Modelo B con constante
 
 ```{r message = FALSE }
 summary(ur.pp(LDatos[, 3], type = "Z-tau", model = "constant", use.lag = 4)) #modelo b, con constante
 ```
 
-el t estadistico es mayor al t de tablas, se acepta ho, la serie no es estacionaria  
+El t estadístico es mayor al t de tablas, se acepta ho, la serie no es estacionaria  
 
 
 ##### DIFERENCIAS: TIIE_28 
 
-###### modelo a con tendencia
+###### Modelo A con tendencia
 
 ```{r message = FALSE }
 summary(ur.pp(DLDatos[, 3], type = "Z-tau", model = "trend", use.lag = 4))
 ```
-el t estadistico es menorr al t de tablas, se rechaza ho, la serie es estacionaria 
+El t estadístico es menor al t de tablas, se rechaza ho, la serie es estacionaria 
 la serie se tiene que diferenciar al menos una vez
 
-###### modelo b con constante
+###### Modelo B con constante
 
 ```{r message = FALSE }
 summary(ur.pp(DLDatos[, 3], type = "Z-tau", model = "constant", use.lag = 4))
 ```
-el t estadistico es menor al t de tablas, se rechaza ho, la serie  es estacionaria 
+El t estadístico es menor al t de tablas, se rechaza ho, la serie  es estacionaria 
 la serie se tiene que diferenciar al menos una vez
 
 #### Conclusión 
@@ -458,7 +458,7 @@ Procedemos a realizar un modelo VAR(p) en niveles
 
 
 #### Ambos modelos
-si elegimos el modelo con ambos, el numero de rezagos de acuerdo al criterio AIC debe ser 8 rezagos
+Si elegimos el modelo con ambos, el numero de rezagos de acuerdo al criterio AIC debe ser 8 rezagos
 
 
 ```{r message = FALSE }
@@ -468,7 +468,7 @@ VARselect(LDatos, lag.max = 10, type = "both")
 
 #### Modelo solo tendencia
 
-si elegimos el modelo con tendencia, el numero de rezagos de acuerdo al criterio AIC debe ser 2 rezagos
+Si elegimos el modelo con tendencia, el numero de rezagos de acuerdo al criterio AIC debe ser 2 rezagos
 
 ```{r message = FALSE }
 
@@ -477,7 +477,7 @@ VARselect(LDatos, lag.max = 10, type = "trend")
 
 #### Modelo solo constante
 
-si elegimos el modelo con constante, el numero de rezagos de acuerdo al criterio AIC debe ser 2 rezagos
+Si elegimos el modelo con constante, el numero de rezagos de acuerdo al criterio AIC debe ser 2 rezagos
 
 ```{r message = FALSE }
 
@@ -487,7 +487,7 @@ VARselect(LDatos, lag.max = 10, type = "const")
 #### Modelo sin tendencia ni constante
 
 
-si elegimos el modelo sin tendencia y sin consatante, el numero de rezagos de acuerdo al criterio AIC debe ser 4 rezagos
+Si elegimos el modelo sin tendencia y sin consatante, el numero de rezagos de acuerdo al criterio AIC debe ser 4 rezagos
 
 ```{r message = FALSE }
 
@@ -527,7 +527,7 @@ summary(ca.jo(LDatos, type = "trace", ecdet = "trend", K = 2, spec = "longrun"))
 ```
 
 
-Existen al menos "" vectores de cointegracion
+Existen al menos "d" vectores de cointegracion
 rechazo Ho, no hay cero vectores de cointegracion
 existe al menos 1 vector de cointegracion considerando un mecanismo con tendencia y con 2 rezagos
 el igae en su relacion con el INPC de largo plazo es positiva
@@ -539,7 +539,7 @@ y Una constante positiva
 summary(ca.jo(LDatos, type = "trace", ecdet = "const", K = 2, spec = "longrun"))
 ```
 
-Existen al menos "" vectores de cointegracion
+Existen al menos "d" vectores de cointegracion
 rechazo Ho, no hay cero vectores de cointegracion
 existe al menos 1 vector de cointegracion considerando un mecanismo sin tendencia y sin constante y 4 rezagos
 
@@ -569,14 +569,14 @@ TT <- ts(c(1:155),
          freq = 12)
 ```
 
-calculamos la ecuacion de los residuales utilizando los resultados de summary(CA_1)
+Calculamos la ecuación de los residuales utilizando los resultados de summary(CA_1)
 
 ```{r message = FALSE }
 
 U <- LDatos[ , 1] - 2.839673805*LDatos[ , 2] + 0.051677628*LDatos[ , 3] + 0.007464802*TT
 ```
 
-forma de encontar un cobminacion lineal de los vectores incluio en el vector y
+Forma de encontar un combinación lineal de los vectores incluio en el vector y
 generando un objeto estacionario
 
 Residual que genera la relacion de largo plazo de las series que cointegran alrededor de una tendencia
@@ -593,7 +593,7 @@ Aplicamos las Raices Unitarias para saber si los residuales son estacionarios
 
 
 
-#### Prueba de raices unitarias para los residuales
+#### Prueba de raíces unitarias para los residuales
 
 ##### Prueba en NIVELES
 
