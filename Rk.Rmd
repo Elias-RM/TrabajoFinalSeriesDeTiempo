@@ -375,7 +375,7 @@ summary(ur.pp(LDatos[, 2], type = "Z-tau", model = "trend", use.lag = 4))
 
 El t estadístico es mayor al t de tablas, se acepta ho, la serie no es estacionaria 
 
-###### Modelo bB, con constante
+###### Modelo B, con constante
 
 ```{r message = FALSE }
 summary(ur.pp(LDatos[, 2], type = "Z-tau", model = "constant", use.lag = 4)) 
@@ -496,7 +496,7 @@ VARselect(LDatos, lag.max = 10, type = "none")
 
 #### Selección del modelo con tendencia
 
-El tipo de modelo que vamos a utlizar es con constante, ya que al realizar las pruebas de raices unitarias
+El tipo de modelo que vamos a utlizar es con constante, ya que al realizar las pruebas de raíces unitarias
 el modelo con constante tiene el mismo orden de integracion i=1.
 Para realizar el numero de rezagos utilizamos el criterio AIC, el cual nos dio que debemos utilizar 2 rezagos
 
@@ -589,7 +589,7 @@ plot(U, main = "Residuales de la Ecuacion de Cointegracion",
      col = "darkred")
 ```
 
-Aplicamos las Raices Unitarias para saber si los residuales son estacionarios 
+Aplicamos las Raíces Unitarias para saber si los residuales son estacionarios 
 
 
 
