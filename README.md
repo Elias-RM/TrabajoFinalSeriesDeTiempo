@@ -88,12 +88,8 @@
 
 **Facultad de Econimia - UNAM**
 
-**Integrantes del equipo**
-
-  - Cedeño Alvarado Fabian
-  - Murcia Rojas Tania
+**Alumno**
   - Reyes Martínez Elías
-
 **Profesor**
 
   - Oliva Váquez Benjamín
