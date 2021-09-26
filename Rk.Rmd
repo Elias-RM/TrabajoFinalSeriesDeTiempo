@@ -31,12 +31,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 **Universidad Nacional Autónoma de México**
 
-**Facultad de Econimia - UNAM**
+**Facultad de Economía - UNAM**
 
-**Integrantes del equipo**
+**Alumno**
 
-- Cedeño Alvarado Fabian
-- Murcia Rojas Tania
 - Reyes Martínez Elías
 
 **Profesor**
